@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+<div>
+    <form action="@Url.Action("Login","SimpleAuth")" method="post">
+        <div>
+            <span>User Name</span>
+            <span><input type="text" id="txtUserName" name="userName"/></span>
+        </div>    
+        <div>
+            <span>Password</span>
+            <span><input type="password" id="txtPassword" name="password"/></span>
+        </div>
+        
+        <div>
+            <label class="label label-danger">@ViewBag.ErrorMessage</label>
+        </div>
+
+        <div>
+            <input type="submit" value="Submit"/>
+        </div>
+    </form>
+</div>

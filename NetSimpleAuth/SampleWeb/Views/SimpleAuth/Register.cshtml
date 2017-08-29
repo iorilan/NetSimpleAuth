@@ -1,0 +1,48 @@
+﻿@model Core.SimpleAuthUser
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>SimpleAuthUser</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div>
+                <div class="col-md-4">User Name</div>
+                <div class="col-md-8">@Html.EditorFor(x=>x.UserName)</div>
+            </div>
+            <div>
+                <div class="col-md-4">Password</div>
+                <div class="col-md-8">@Html.PasswordFor(x => x.OriginPassword)</div>
+            </div>
+            <div>
+                <div class="col-md-4">Email</div>
+                <div class="col-md-8">@Html.EditorFor(x => x.Email)</div>
+            </div>
+            <div>
+                <div class="col-md-4">Phone</div>
+                <div class="col-md-8">@Html.EditorFor(x => x.Phone)</div>
+            </div>
+
+            <div>
+                <div class="col-md-4"></div>
+                <div class="col-md-8">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+            
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

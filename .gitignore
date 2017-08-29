@@ -1,1 +1,6 @@
 NetSimpleAuth/Core/obj/Debug/
+NetSimpleAuth/Core/bin/Debug/
+NetSimpleAuth/Core/bin/Release/
+NetSimpleAuth/packages/
+NetSimpleAuth/SampleWeb/bin/Debug/
+NetSimpleAuth/SampleWeb/obj/Debug/
