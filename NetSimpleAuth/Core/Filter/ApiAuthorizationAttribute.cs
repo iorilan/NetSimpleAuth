@@ -1,9 +1,11 @@
 ﻿using System.Web;
 using System.Web.Mvc;
-using Core.Providers;
 
 namespace Core.Filter
 {
+    /// <summary>
+    /// Used to authenticate the api calls
+    /// </summary>
     public class ApiAuthorizationAttribute : AuthoriseBaseAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)

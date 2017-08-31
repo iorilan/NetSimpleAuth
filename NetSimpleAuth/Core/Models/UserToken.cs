@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace Core.Models
 {
     using System;

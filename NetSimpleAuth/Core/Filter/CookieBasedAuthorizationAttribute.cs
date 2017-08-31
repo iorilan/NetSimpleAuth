@@ -1,10 +1,11 @@
-﻿using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
-using Core.Providers;
 
 namespace Core.Filter
 {
+    /// <summary>
+    /// Used to authenticate the pages
+    /// </summary>
     public class CookieBasedAuthorizationAttribute : AuthoriseBaseAttribute
     {
         public const string LoginView = "~/Views/SimpleAuth/Login.cshtml";

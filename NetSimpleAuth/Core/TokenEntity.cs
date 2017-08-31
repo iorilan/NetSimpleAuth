@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core
 {
     public class TokenEntity
     {
         public const long DEFAULT_USER_ID = -1;
+        private const string EXPIRYDATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
         public TokenEntity()
             : this("", "", DateTime.MinValue,DEFAULT_USER_ID)
         {
@@ -17,7 +14,7 @@ namespace Core
         {
             AccessToken = accessToken;
             RefreshToken = refreshToken;
-            ExpireAt = expireAt;
+            ExpireAt = expireAt.ToString(EXPIRYDATE_FORMAT);
             UserId = userId;
         }
 
@@ -33,8 +30,11 @@ namespace Core
         }
 
         public string AccessToken { get; set; }
-        public DateTime ExpireAt { get; set; }
+
+        public string ExpireAt { get; set; }
+
         public string RefreshToken { get; set; }
+
         public long UserId { get; set; }
     }
 }
