@@ -8,7 +8,7 @@ namespace Core.Filter
     /// </summary>
     public class CookieBasedAuthorizationAttribute : AuthoriseBaseAttribute
     {
-        public const string LoginView = "~/Views/SimpleAuth/Login.cshtml";
+        public const string LoginView = "~/Views/Account/Login.cshtml";
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

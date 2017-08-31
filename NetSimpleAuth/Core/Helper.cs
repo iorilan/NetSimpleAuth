@@ -27,9 +27,17 @@ namespace Core
     {
         public static void SaveInResponseCookie(this HttpCookieCollection cookies, string accessToken, string refreshToken, string loggedInUserId)
         {
-            cookies.Set(new HttpCookie(AuthoriseBaseAttribute.ACCESSTOKEN, accessToken));
-            cookies.Set(new HttpCookie(AuthoriseBaseAttribute.REFRESHTOKEN, refreshToken));
-            cookies.Set(new HttpCookie(AuthoriseBaseAttribute.CURRENT_USERID, loggedInUserId));
+            var accessCookie = new HttpCookie(AuthoriseBaseAttribute.ACCESSTOKEN, accessToken);
+            accessCookie.Expires = DateTime.Now.AddMinutes(Setup.TokenExpireMinutes);
+            cookies.Set(accessCookie);
+
+            var refreshCookie = new HttpCookie(AuthoriseBaseAttribute.REFRESHTOKEN, refreshToken);
+            refreshCookie.Expires = DateTime.Now.AddMinutes(Setup.TokenExpireMinutes);
+            cookies.Set(refreshCookie);
+
+            var loggedUserCookie = new HttpCookie(AuthoriseBaseAttribute.CURRENT_USERID, loggedInUserId);
+            loggedUserCookie.Expires = DateTime.Now.AddMinutes(Setup.TokenExpireMinutes);
+            cookies.Set(loggedUserCookie);
         }
 
         public static bool TryExtractFromRequestCookie(this HttpCookieCollection cookies, out TokenEntity result)
@@ -45,10 +53,21 @@ namespace Core
             //// take value from request form
             var accessToken = HttpContext.Current.Request.Cookies[AuthoriseBaseAttribute.ACCESSTOKEN].Value;
             var refreshToken = HttpContext.Current.Request.Cookies[AuthoriseBaseAttribute.REFRESHTOKEN].Value;
-            var currentUserId = HttpContext.Current.Request.Cookies[AuthoriseBaseAttribute.CURRENT_USERID].Value;
+            var currentUserId = HttpContext.Current.Request.Cookies[AuthoriseBaseAttribute.CURRENT_USERID].Value ;
+            if (string.IsNullOrWhiteSpace(currentUserId))
+            {
+                currentUserId = TokenEntity.DEFAULT_USER_ID.ToString();
+            }
 
             result = new TokenEntity(accessToken, refreshToken, DateTime.MinValue, long.Parse(currentUserId));
             return true;
+        }
+
+        public static void ClearLoginCookies(this HttpCookieCollection cookies)
+        {
+            cookies.Set(new HttpCookie(AuthoriseBaseAttribute.ACCESSTOKEN, ""));
+            cookies.Set(new HttpCookie(AuthoriseBaseAttribute.REFRESHTOKEN, ""));
+            cookies.Set(new HttpCookie(AuthoriseBaseAttribute.CURRENT_USERID, ""));
         }
     }
 

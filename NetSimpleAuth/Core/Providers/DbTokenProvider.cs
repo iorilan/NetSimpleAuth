@@ -45,6 +45,8 @@ namespace Core.Providers
 
                     ////create new one
                     var newToken = CreateRefresh();
+                    newToken.UserId = record.UserId;
+
                     record.AccessToken = newToken.AccessToken;
                     record.RefreshToken = newToken.RefreshToken;
                     record.ExpireAt = DateTime.Parse(newToken.ExpireAt);

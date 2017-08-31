@@ -5,7 +5,7 @@ namespace Core
     public class TokenEntity
     {
         public const long DEFAULT_USER_ID = -1;
-        private const string EXPIRYDATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+        private const string EXPIRYDATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
         public TokenEntity()
             : this("", "", DateTime.MinValue,DEFAULT_USER_ID)
         {

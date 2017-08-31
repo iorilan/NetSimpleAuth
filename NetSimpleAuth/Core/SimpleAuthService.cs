@@ -108,6 +108,49 @@ namespace Core
             }
         }
 
+        public SimpleAuthResult ChangePassword(long userId, string oldpassword, string password, string confirmPassword)
+        {
+            if (string.IsNullOrWhiteSpace(oldpassword) ||
+                string.IsNullOrWhiteSpace(password) ||
+                string.IsNullOrWhiteSpace(confirmPassword))
+            {
+                return SimpleAuthResult.Fail("password field can not be empty");
+            }
+
+            using (var context = new SimpleUserDbContext())
+            {
+                var user = context.LoginUser.FirstOrDefault(x => x.Id == userId);
+                if (user == null)
+                {
+                    return SimpleAuthResult.Fail(string.Format("user with id '{0}' not found", userId));
+                }
+
+                var hashedOldPassword = HashPassword(oldpassword);
+                if (hashedOldPassword != user.PasswordHash)
+                {
+                    return SimpleAuthResult.Fail("current password is incorrect.");
+                }
+
+                if (password != confirmPassword)
+                {
+                    return SimpleAuthResult.Fail("password does not match confirm password.");
+                }
+
+                //// apply more rules here 
+                //// ...
+                var hashedPassword = HashPassword(password);
+                if (hashedPassword == user.PasswordHash)
+                {
+                    return SimpleAuthResult.Fail("password can not be same with current password.");
+                }
+                user.PasswordHash = hashedPassword;
+
+                context.SaveChanges();
+
+                return SimpleAuthResult.Success();
+            }
+        }
+
         private string HashPassword(string originPassword)
         {
             try
